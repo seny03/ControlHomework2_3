@@ -37,37 +37,47 @@ namespace UserUtils
                 Console.WriteLine("[ERROR] Возникла ошибка: " + ex.Message);
             }
 
-            if (lines is null || lines.Length < 2)
+            if (lines is null)
             {
                 return null;
             }
 
-            MosGas[] mosGas = new MosGas[lines.Length];
+            if (lines.Length < 2)
+            {
+                StructureError();
+                return null;
+            }
+
             string[] headingSplittedLine = CsvProcessing.CsvLineSplit(lines[0]);
             if (headingSplittedLine is null || headingSplittedLine.Length != CsvProcessing.Heading.Length)
             {
+                StructureError();
                 return null;
             }
             for (int i = 0; i < CsvProcessing.Heading.Length; i++)
             {
                 if (headingSplittedLine[i] != CsvProcessing.Heading[i])
                 {
+                    StructureError();
                     return null;
                 }
             }
 
-            for (int i = 1; i < lines.Length; i++)
+            lines = lines[1..];
+            MosGas[] mosGas = new MosGas[lines.Length];
+            for (int i = 0; i < lines.Length; i++)
             {
                 var splittedLine = CsvProcessing.CsvLineSplit(lines[i]);
-                Console.WriteLine(string.Join(" ; ", splittedLine));
                 if (splittedLine == null || splittedLine.Length != CsvProcessing.Heading.Length)
                 {
+                    StructureError();
                     return null;
                 }
 
 
                 if (!int.TryParse(splittedLine[1], out int areaId))
                 {
+                    StructureError();
                     return null;
                 }
 
@@ -77,6 +87,7 @@ namespace UserUtils
                 }
                 catch (ArgumentException)
                 {
+                    StructureError();
                     return null;
                 }
             }
