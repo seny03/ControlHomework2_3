@@ -1,6 +1,6 @@
 ﻿namespace DataUtils
 {
-    public class MosGas
+    public class MosGas : IComparable<MosGas>
     {
         private AdministrativeUnit _administrativeUnit = new AdministrativeUnit();
         private string _streetName = "Неизвестная улица";
@@ -30,6 +30,19 @@
             }
         }
 
+        public AdministrativeUnit AdministrativeUnit
+        {
+            init
+            {
+                if (value is null)
+                {
+                    throw new ArgumentException();
+                }
+                _administrativeUnit = value;
+            }
+            get { return _administrativeUnit; }
+        }
+
         public MosGas(AdministrativeUnit administrativeUnit, string streetName, int areaId)
         {
             if (administrativeUnit is null)
@@ -41,5 +54,14 @@
             AreaId = areaId;
         }
         public MosGas() { }
+
+        public int CompareTo(MosGas? other)
+        {
+            if (other is null)
+            {
+                throw new ArgumentException();
+            }
+            return AdministrativeUnit.District.CompareTo(other.AdministrativeUnit.District);
+        }
     }
 }

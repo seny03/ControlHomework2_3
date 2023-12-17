@@ -10,18 +10,12 @@ namespace UserUtils
             MosGas[]? mosGas = IOUtils.ReadLines();
             if (mosGas is null)
             {
+                return;
             }
-            MosGas[] cur = DataProcessing.GetRows(mosGas, Side.Bottom, 10);
-            foreach (MosGas mg in cur)
+
+            foreach (var mg in DataProcessing.FilterRows(mosGas, "streetname", "Выставочный переулок"))
             {
-                if (mg is null)
-                {
-                    Console.WriteLine("null");
-                }
-                else
-                {
-                    Console.WriteLine(mg.AreaId + " ; " + mg.StreetName);
-                }
+                Console.WriteLine(mg.AreaId + " ; " + mg.StreetName + " ; " + mg.AdministrativeUnit.District + " ; " + mg.AdministrativeUnit.Area);
             }
         }
     }
