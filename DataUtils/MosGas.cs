@@ -32,6 +32,10 @@
 
         public MosGas(AdministrativeUnit administrativeUnit, string streetName, int areaId)
         {
+            if (administrativeUnit is null)
+            {
+                throw new ArgumentException();
+            }
             _administrativeUnit = administrativeUnit;
             StreetName = streetName;
             AreaId = areaId;

@@ -6,8 +6,8 @@ namespace UserUtils
     {
         static void Main(string[] args)
         {
-            var T = new AdministrativeUnit("1", "2");
-            Console.WriteLine(T.Area + " " + T.District);
+            MosGas[]? mosGas = IOUtils.ReadLines();
+
         }
     }
 }
